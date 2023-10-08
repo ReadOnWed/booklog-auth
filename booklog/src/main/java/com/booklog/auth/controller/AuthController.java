@@ -1,6 +1,5 @@
 package com.booklog.auth.controller;
 
-import com.booklog.auth.oauth.common.OAuthReqDto;
 import com.booklog.auth.oauth.google.GoogleService;
 import com.booklog.auth.oauth.google.GoogleTokenDto;
 import com.booklog.auth.oauth.google.GoogleUserDto;
@@ -13,32 +12,32 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 
 @Slf4j
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/auth")
+@RequestMapping("/member")
 public class AuthController {
 
     private final KakaoService kakaoService;
     private final GoogleService googleService;
 
-    @PostMapping("/login/kakao")
-    public ResponseEntity<MemberLoginDto> kakaoLogin(@RequestBody OAuthReqDto oAuthReqDto) {
-        KakaoTokenDto kakaoTokenDto = kakaoService.getKakaoAccessToken(oAuthReqDto.getCode());
+    @GetMapping("/kakaoLogin")
+    public ResponseEntity<MemberLoginDto> kakaoLogin(@RequestParam("code") String code) {
+        KakaoTokenDto kakaoTokenDto = kakaoService.getKakaoAccessToken(code);
         KakaoUserDto kakaoUserDto = kakaoService.getKakaoUser(kakaoTokenDto.getAccessToken());
         Member loginMember = kakaoService.loginKakao(kakaoUserDto);
         return new ResponseEntity<>(kakaoService.getMemberLoginDto(loginMember), HttpStatus.OK);
     }
 
-    @PostMapping("/login/google")
-    public ResponseEntity<MemberLoginDto> googleLogin(@RequestBody OAuthReqDto oAuthReqDto) {
-        GoogleTokenDto googleTokenDto = googleService.getGoogleAccessToken(oAuthReqDto.getCode());
+    @GetMapping("/googleLogin")
+    public ResponseEntity<MemberLoginDto> googleLogin(@RequestParam("code") String code) {
+        GoogleTokenDto googleTokenDto = googleService.getGoogleAccessToken(code);
         GoogleUserDto googleUserDto = googleService.getGoogleUser(googleTokenDto.getAccessToken());
         Member loginMember = googleService.loginGoogle(googleUserDto);
         return new ResponseEntity<>(kakaoService.getMemberLoginDto(loginMember), HttpStatus.OK);
