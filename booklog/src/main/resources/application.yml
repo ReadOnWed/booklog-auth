@@ -1,4 +1,6 @@
 spring:
+  application:
+    name: login-service
   config:
     import: optional:file:.env[.properties]
   datasource:
@@ -30,3 +32,14 @@ logging:
 
 server:
   port: 8080
+
+eureka:
+  instance:
+    hostname: localhost
+    instance-id: login-microservice-instance
+
+  client:
+    register-with-eureka: true
+    fetch-registry: true
+    service-url:
+      defaultZone: http://localhost:8761/eureka
