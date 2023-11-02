@@ -19,7 +19,7 @@ import org.springframework.web.bind.annotation.RestController;
 @Slf4j
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/member2")
+@RequestMapping("/v2/member")
 // TODO Authentication 처리 필요
 public class MemberController {
 
