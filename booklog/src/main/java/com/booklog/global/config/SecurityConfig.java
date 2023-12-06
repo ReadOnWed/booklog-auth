@@ -1,9 +1,6 @@
 package com.booklog.global.config;
 
 
-import com.booklog.auth.jwt.JwtAuthenticationProcessingFilter;
-import com.booklog.auth.jwt.service.JwtService;
-import jakarta.servlet.Filter;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -15,14 +12,12 @@ import org.springframework.security.config.annotation.web.configurers.AbstractHt
 import org.springframework.security.config.annotation.web.configurers.HeadersConfigurer.FrameOptionsConfig;
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.web.SecurityFilterChain;
-import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
 @Configuration
 @EnableWebSecurity
 @RequiredArgsConstructor
 public class SecurityConfig {
 
-    private final JwtService jwtService;
     //라이라이 차차차, antMatcher, csrf가 deprecated되어버렸기에 열심히
     //velog, stackoverflow를 뒤져 만드는 중임무황태
     //https://stackoverflow.com/questions/74753700/cannot-resolve-method-antmatchers-in-authorizationmanagerrequestmatcherregis
@@ -30,8 +25,7 @@ public class SecurityConfig {
 
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
-        http.addFilterBefore(jwtAuthenticationProcessingFilter(),
-            UsernamePasswordAuthenticationFilter.class);
+
         http
             .csrf(AbstractHttpConfigurer::disable)
             .sessionManagement(sessionManagement ->
@@ -52,8 +46,5 @@ public class SecurityConfig {
         };
     }
 
-    private Filter jwtAuthenticationProcessingFilter() {
-        return new JwtAuthenticationProcessingFilter(jwtService);
-    }
 }
 

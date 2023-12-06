@@ -22,13 +22,13 @@ import org.springframework.web.bind.annotation.RestController;
 @Slf4j
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/auth")
+@RequestMapping("/member")
 public class AuthController {
 
     private final KakaoService kakaoService;
     private final GoogleService googleService;
 
-    @PostMapping("/login/kakao")
+    @PostMapping("/kakaoLogin")
     public ResponseEntity<MemberLoginDto> kakaoLogin(@RequestBody OAuthReqDto oAuthReqDto) {
         KakaoTokenDto kakaoTokenDto = kakaoService.getKakaoAccessToken(oAuthReqDto.getCode());
         KakaoUserDto kakaoUserDto = kakaoService.getKakaoUser(kakaoTokenDto.getAccessToken());
@@ -36,7 +36,7 @@ public class AuthController {
         return new ResponseEntity<>(kakaoService.getMemberLoginDto(loginMember), HttpStatus.OK);
     }
 
-    @PostMapping("/login/google")
+    @PostMapping("/googleLogin")
     public ResponseEntity<MemberLoginDto> googleLogin(@RequestBody OAuthReqDto oAuthReqDto) {
         GoogleTokenDto googleTokenDto = googleService.getGoogleAccessToken(oAuthReqDto.getCode());
         GoogleUserDto googleUserDto = googleService.getGoogleUser(googleTokenDto.getAccessToken());
