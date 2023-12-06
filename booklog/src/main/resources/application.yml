@@ -1,6 +1,6 @@
 spring:
   application:
-    name: login-service
+    name: member-service
   config:
     import: optional:file:.env[.properties]
   datasource:
