@@ -19,14 +19,8 @@ public class MemberService {
 
     private final MemberRepository memberRepository;
 
-    public MemberDto findMember(Long findMemberId, Long myMemberId) {
-
-        // 내 정보 조회
-        if (findMemberId == null) {
-            return MemberMapper.INSTANCE.entityToMemberDto(findMemberById(myMemberId));
-        }
-        // 타인 정보 조회
-        // 추후에 프로필 공개 여부 추가할 수 있어 분리
+    public MemberDto findMember(Long findMemberId) {
+        //정보 조회
         return MemberMapper.INSTANCE.entityToMemberDto(findMemberById(findMemberId));
     }
 

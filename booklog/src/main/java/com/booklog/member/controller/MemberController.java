@@ -20,15 +20,14 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/memberInfo")
-// TODO Authentication 처리 필요
+// TODO 이미 gateway에서 헤더에 고유식별자를 붙여서 넘기므로 해당 로직을 적용할 것, gateway cors문제 확인해볼 것
 public class MemberController {
 
     private final MemberService memberService;
 
     @GetMapping({"", "/{memberId}"})
-    public ResponseEntity<MemberDto> findMember(@PathVariable(required = false) Long memberId, Authentication authentication) {
-        return new ResponseEntity<>(memberService.findMember(memberId, Long.parseLong(
-            authentication.getName())), HttpStatus.OK);
+    public ResponseEntity<MemberDto> findMember(@PathVariable(required = false) Long memberId) {
+        return new ResponseEntity<>(memberService.findMember(memberId), HttpStatus.OK);
     }
 
     @PatchMapping
