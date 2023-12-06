@@ -47,13 +47,13 @@ public class JwtServiceImpl implements JwtService {
 
     @Override
     public String createAccessToken(JwtDto jwtDto) {
-        return create(jwtDto, "access-token",
+        return create(jwtDto, "Access-Token",
             1000 * 60 * 60 * 24 * 7 * ACCESS_TOKEN_EXPIRE_MINUTES);
     }
 
     @Override
     public String createRefreshToken(JwtDto jwtDto) {
-        return create(jwtDto, "refresh-token",
+        return create(jwtDto, "Refresh-Token",
             1000 * 60 * 60 * 24 * 7 * REFRESH_TOKEN_EXPIRE_MINUTES);
     }
 
